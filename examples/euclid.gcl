@@ -1,0 +1,10 @@
+[0 < b /\ b < a]
+i:= 0;
+r:= a;
+while b < r\/b=r
+invariant a=b*i+r
+do
+(i:=i+1;
+r := r - b)
+od;;
+[a=b*i+r]
