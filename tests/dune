@@ -1,0 +1,9 @@
+(test
+  (name tests)
+  (deps test_inputs/test_prog_0.micro
+        test_inputs/test_prog_1.micro
+        test_inputs/euclid.micro
+        test_inputs/global.micro
+        test_inputs/fun_args.micro
+        )
+    (libraries lib alcotest))

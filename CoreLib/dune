@@ -1,0 +1,3 @@
+(library (name lib))
+(ocamllex (modules lexer))
+(ocamlyacc (modules parser))

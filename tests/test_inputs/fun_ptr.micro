@@ -1,0 +1,9 @@
+int f(g:(int->int),x:int){
+    return g(x)
+};
+
+int g(x:int){
+    return x+1
+};
+
+int a = f(g,3)

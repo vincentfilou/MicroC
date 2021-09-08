@@ -1,0 +1,12 @@
+int euclid(a,b){
+    int i = 0;
+    int r = a;
+    while ( b < r || b==r ) {
+        i++;
+        r := r - b
+    };
+    return i
+};
+
+int x = euclid(7,3);
+int y = euclid(24,3)

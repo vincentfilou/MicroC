@@ -1,0 +1,10 @@
+int f(x){
+    x := 2;
+    return x+1
+};
+
+int main(){
+    return f(3)
+};
+
+int x = main()

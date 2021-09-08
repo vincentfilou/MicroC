@@ -1,0 +1,5 @@
+int f(a){ return a + 1};
+
+int g(a){return a-1};
+
+int x = g(f(g(10)))

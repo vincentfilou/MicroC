@@ -1,0 +1,2 @@
+(executable (name MicroC)
+ (libraries lib))

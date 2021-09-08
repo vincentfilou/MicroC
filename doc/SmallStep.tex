@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage{bussproofs}
+\title{Small Step Semantics}
+\author{Vincent Filou}
+
+\input{Utils.tex}
+
+\begin{document}
+
+\maketitle
+
+\section{Environment}
+
+\section{Rules}
+
+\subsection{Instructions}
+
+\begin{prooftree}
+    \AxiomC{$E,exp \rightarrow E',exp'$}
+    \LeftLabel{Skip}
+    \UnaryInfC{$E,\Skip{exp} \rightarrow E', \Skip{exp'}$}
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{}
+    \LeftLabel{Declare 1}
+    \UnaryInfC{$E,\Declare{id}{(Value\;v)} \rightarrow declare(E',id,v), \Skip{\Value{0}}$}
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{$E, exp \rightarrow E',exp'$}
+    \LeftLabel{Declare 2}
+    \UnaryInfC{$E,\Declare{id}{exp} \rightarrow E',\Declare{id}{exp'}$}
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{}
+    \LeftLabel{Seq 1}
+    \UnaryInfC{$E,\Seq{\Skip{exp}}{i_0} \rightarrow E,i_0$}
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{}
+    \LeftLabel{Seq 2}
+    \UnaryInfC{$E,\Seq{\Return{exp}}{i_0} \rightarrow E,\Return{exp}$}
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{$E,i_0 \rightarrow E',i_2$}
+    \LeftLabel{Seq 3}
+    \UnaryInfC{$E,\Seq{i_0}{i_1} \rightarrow E',\Seq{i_2}{i_1}$}
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{}
+    \LeftLabel{Assign 1}
+    \UnaryInfC{$E,\Assign{id}{\Value{x}} \rightarrow set(E,id,x),\Skip{\Value{0}}$}
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{$E,exp \rightarrow E',exp'$}
+    \LeftLabel{Assign 2}
+    \UnaryInfC{$E,\Assign{id}{exp} \rightarrow E',\Assign{id}{exp'}$}
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{}
+    \LeftLabel{If 1}
+    \UnaryInfC{$E,\IFTE{TRUE}{i_0}{i_1} \rightarrow E,i_0$}
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{}
+    \LeftLabel{Else 1}
+    \UnaryInfC{$E,\IFTE{FALSE}{i_0}{i_1} \rightarrow E,i_1$}
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{$E,c_0 \rightarrow E',c_1$}
+    \LeftLabel{If 2}
+    \UnaryInfC{$E,\IFTE{c_0}{i_0}{i_1} \rightarrow E',\IFTE{c_1}{i_0}{i_1}$}
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{}
+    \LeftLabel{While 1}
+    \UnaryInfC{$E,\While{c_0}{i_0}\rightarrow E,\IFTE{c_0}{\Seq{i_0}{\While{c_0}{i_0}}}{\Skip{\Value{0}}}$}
+\end{prooftree}
+
+\subsection{Expressions}
+
+TODO
+
+\subsection{Conditions}
+
+TODO
+
+\end{document}
