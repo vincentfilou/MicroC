@@ -27,17 +27,20 @@ exception No_Open_Scope;;
 
 type ttype =
 | Int 
+| Float
 | Function of ((ttype list)*ttype)
 ;;
 
 type typed_value =
 | Tint of int 
+| Tfloat of float
 | Tfun of ((string*ttype) list)*ttype*instruction 
 ;;
 
 let ttype_of_typed_value v = 
   match v with 
-  | Tint _ -> Int
+  | Tint _         -> Int
+  | Tfloat _       -> Float
   | Tfun (lt,tt,_) -> Function ((map (fun x ->snd x) lt)*tt)
 ;;
 
@@ -49,7 +52,7 @@ type 'a elt =
 type 'a environment = ('a elt) list;;
 
 type eval_environment = (ttyped_value environment);;
-type type_envrionment = (ttype environment);;
+type type_environment = (ttype environment);;
 
 let filter (e:environment)(tt:string)
 
@@ -65,6 +68,8 @@ type environment = env_elt list;;
 
 let empty = [];;
 
+(* TODO : to update *)
+
 let rec is_declared_in_scope (e:environment)(id:string) =
 match e with 
 | [] -> false
@@ -72,6 +77,8 @@ match e with
 | Function (_,_,_)::e0 -> is_declared_in_scope e0 id 
 | Int (id0,_)::e0    -> if id = id0 then true else is_declared_in_scope e0 id
 ;;
+
+(* TODO : to delete, use only is_declared_in_scope *)
 
 let rec function_is_declared_in_scope (e:environment)(id:string) = 
 match e with 
@@ -82,7 +89,7 @@ match e with
 ;;
 
 (* declare the variable id in the current scope *)
-
+(* TODO, replace int with typed_value *)
 let declare (e:environment)(id:string)(v:int) =
   if is_declared_in_scope e id then raise (Already_Defined_Variable id)
   else Int (id,v)::e
@@ -95,6 +102,7 @@ let function_declare (e:environment)(id:string)(args:string list)(def:instructio
   else (Function (id,args,def))::e;;
 
 (* set the value of id in the last scope in which it as been declared *)
+(* TODO, replace int with typed_value + dynamic typecheck *)
 
 let rec set (e:environment)(id:string)(v:int) = 
   match e with 
@@ -105,7 +113,7 @@ let rec set (e:environment)(id:string)(v:int) =
 ;;
 
 (* get the Int of id in the last scope in which it as been declared *)
-
+(* Todo : return typed_value *)
 let rec get (e:environment)(id:string) =
   match e with 
   | [] -> raise (Undefined_Variable id)
@@ -114,6 +122,7 @@ let rec get (e:environment)(id:string) =
   | Int (id0,v0)::e0 -> if id0 = id then v0 else (get e0 id)
 ;;
 
+(* TODO : delete *)
 let rec function_get (e:environment)(id:string) = 
 match e with 
   | [] -> raise (Undefined_Function id)
@@ -133,6 +142,8 @@ match e with
 | _ :: e0   -> close_scope e0
 ;;
 
+(* TODO : update *)
+
 let env_elt_to_string (x:env_elt) =
   match x with 
   | Scope      -> "Scope"
@@ -140,6 +151,8 @@ let env_elt_to_string (x:env_elt) =
   | Function (id,_,_) -> String.concat "" ["Function ";id]
 ;;
 
+
+(* replace list string with list of typed_values ? *)
 let rec declare_all (e:environment)(ids: string list)(values : int list) =
   match (ids,values) with 
   | (id0::ids0,v0::values0) -> declare_all (declare e id0 v0) ids0 values0
