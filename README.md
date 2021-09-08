@@ -12,3 +12,5 @@
     * Update typechecking algo
     * Update SmallStep
     * Update BigStep
+
+    lapin
