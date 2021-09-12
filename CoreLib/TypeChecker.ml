@@ -15,7 +15,8 @@ let rec update_type_env (env : type_environment)(i:instruction) =
 let rec type_check_instruction (env:type_environment)(i:instruction)(tt:ttype) : bool = 
   match i with
   | Skip e0            -> type_check_expression env e0 tt
-  | Declare (tt,_,e0) -> type_check_expression env e0 tt
+  (* declare function in env when typechecking (recursion) *)
+  | Declare (tt,id0,e0)  -> type_check_expression (declare env id0 tt) e0 tt
   | Seq (i0,i1)        -> (type_check_instruction env i0 tt) && (let env' = update_type_env env i0 in (type_check_instruction env' i1 tt))
   | Assign (id,e0)     -> type_check_expression env e0 (get env id) 
   | If (c0,i0,i1)      -> (type_check_condition env c0) && (type_check_instruction env i0 tt) && (type_check_instruction env i1 tt) 
