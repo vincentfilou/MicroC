@@ -4,7 +4,10 @@ open Parser
 
 rule token = parse
 [' ' '\t' '\n'] { token lexbuf }
+| "->"  {ARROW}
 | "int" {INT}
+| "float" {FLOAT}
+| ":" {BELONGS} 
 | ";;" {END}
 | "{" {LBRACKET}
 | "}" {RBRACKET}
@@ -35,10 +38,11 @@ rule token = parse
 | "=" {EQ}
 | "==" {EQCOMP}
 | "<" {LT}
-| "->" {IMPL}
+| "=>" {IMPL}
 | "forall" {FORALL}
 | "exists" {EXISTS}
 | "," {COMMA}
-|['0'-'9']+ as lxm {VALUE (int_of_string lxm)}
+|['0'-'9']+ as lxm {IVALUE (int_of_string lxm)}
+|['0'-'9']+'.'['0'-'9']+ as lxm {FVALUE (float_of_string lxm)}
 |['A'-'Z' 'a'-'z']['A'-'Z' 'a'-'z' '0'-'9' '_']* as id {ID id}
 | eof { EOF }

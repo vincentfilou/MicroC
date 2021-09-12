@@ -1,7 +1,8 @@
 # TODO 
 
+does this need static typechecking ?
+
  * Step 1 : add a type for floats, update Env.ml , code typechecking algo
-    * generalize environment 
     * update AST (defun)
     * Update Parser
     * Typechecker + tests 
@@ -12,5 +13,3 @@
     * Update typechecking algo
     * Update SmallStep
     * Update BigStep
-
-    lapin

@@ -1,10 +1,11 @@
-int f(x){
-    x := 2;
-    return x+1
+float f(x:int){
+    float y = 2.0;
+    int z = 3;
+    return y
 };
 
-int main(){
+float main(){
     return f(3)
 };
 
-int x = main()
+float x = main()

@@ -1,0 +1,8 @@
+(float->int) f(a:(float->int)){ 
+    return a
+};
+
+int g(a:float) { return 1};
+
+(float->int) x = f(g);
+int y = x(1.2)

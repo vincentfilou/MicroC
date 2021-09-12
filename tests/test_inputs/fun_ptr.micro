@@ -1,9 +1,9 @@
-int f(g:(int->int),x:int){
-    return g(x)
+int f(g:(int->int),h:(int->int),x:int){
+    return h(g(x))
 };
 
 int g(x:int){
     return x+1
 };
 
-int a = f(g,3)
+int a = f(g,g,3)
